@@ -14,21 +14,36 @@ html,
   justify-content: center;
   width: 100vw;
   height: 100%;
-  background-color: aliceblue;
   background-repeat: no-repeat;
-  background-size: contain;
+  background-size: cover; /* 화면에 꽉 차도록 */
   background-position: center;
   transition: background-image 0.5s ease-in-out;
+  overflow: hidden;
 }
 
 /* 게임 리스트 박스 */
 .game-list {
   display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto; /* 좌우 스크롤 가능 */
+  scroll-snap-type: x mandatory; /* 스냅 효과 */
+  -webkit-overflow-scrolling: touch;
+  width: 100%;
   gap: 20px;
   background: rgba(255, 255, 255, 0.7);
   padding: 20px 30px;
   border-radius: 20px;
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+  justify-content: center;
+}
+
+.game-list::-webkit-scrollbar {
+  display: none; /* 스크롤바 숨김 */
+}
+
+.game-list > div {
+  flex: 0 0 auto;
+  scroll-snap-align: center; /* 각 카드가 중앙에 맞춰짐 */
 }
 
 /* 게임 카드 */
@@ -41,7 +56,8 @@ html,
 
 .game-card img {
   width: 100%;
-  height: auto;
+  height: 120px;
+  object-fit: cover;
   border-radius: 12px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
@@ -55,7 +71,7 @@ html,
 
 /* 선택된 카드 강조 효과 */
 .game-card.selected {
-  transform: scale(1.2);
+  transform: scale(1.3);
   border: 3px solid #00bfff;
   border-radius: 14px;
   background: rgba(255, 255, 255, 0.85);
