@@ -1,0 +1,62 @@
+/* 전체 화면 기본 설정 */
+body,
+html,
+#root {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.app {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+  height: 100%;
+  background-color: aliceblue;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  transition: background-image 0.5s ease-in-out;
+}
+
+/* 게임 리스트 박스 */
+.game-list {
+  display: flex;
+  gap: 20px;
+  background: rgba(255, 255, 255, 0.7);
+  padding: 20px 30px;
+  border-radius: 20px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+/* 게임 카드 */
+.game-card {
+  width: 140px;
+  text-align: center;
+  cursor: pointer;
+  transition: transform 0.3s, border 0.3s;
+}
+
+.game-card img {
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.game-card p {
+  margin-top: 8px;
+  font-weight: bold;
+  font-size: 16px;
+  color: #333;
+}
+
+/* 선택된 카드 강조 효과 */
+.game-card.selected {
+  transform: scale(1.2);
+  border: 3px solid #00bfff;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.85);
+}
