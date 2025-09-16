@@ -4,35 +4,40 @@ html,
 #root {
   margin: 0;
   padding: 0;
+  width: 100vw;
   height: 100%;
+  overflow: hidden;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .app {
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   justify-content: center;
   width: 100vw;
   height: 100%;
   background-color: aliceblue;
   background-repeat: no-repeat;
-  background-size: contain;
+  background-size: cover;
   background-position: center;
   transition: background-image 0.5s ease-in-out;
-  overflow: hidden;
   position: relative;
+  padding-bottom: 40px;
+  overflow: hidden;
+}
+.game-list-wrapper {
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  padding: 40px;
+  width: 100%;
+  background-color: #00bfff;
+  border-radius: 20px 20px 0 0;
 }
 
-/* 선택창 (화면 중앙 고정) */
-.selector {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 160px;
-  height: 180px;
-  transform: translate(-50%, -50%);
-  border-radius: 14px;
-  pointer-events: none;
+.game-list-wrapper::-webkit-scrollbar {
+  display: none;
 }
 
 /* 게임 리스트 (이제 transform으로 이동) */
@@ -40,7 +45,7 @@ html,
   display: flex;
   gap: 20px;
   transition: transform 0.4s ease;
-  position: relative;
+  will-change: transform;
 }
 
 /* 게임 카드 */
@@ -68,8 +73,6 @@ html,
 
 /* 선택된 카드 강조 효과 */
 .game-card.selected {
-  transform: scale(1.2);
   border: 3px solid #00bfff;
   border-radius: 14px;
-  background: rgba(255, 255, 255, 0.85);
 }
