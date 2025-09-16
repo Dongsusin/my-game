@@ -7,7 +7,7 @@ const App: React.FC = () => {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const listRef = useRef<HTMLDivElement>(null);
 
-  // 키보드 방향키로 이동
+  // 방향키 이동
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "ArrowRight") {
@@ -36,20 +36,24 @@ const App: React.FC = () => {
   }, [selectedIndex]);
 
   return (
-    <div
-      className="app"
-      style={{ backgroundImage: `url(${games[selectedIndex].image})` }}
-    >
-      {/* 선택창 */}
-      <div className="selector" />
+    <div className="app-container">
+      <div className="game-box">
+        {/* 상단 게임 이미지 */}
+        <div className="game-preview">
+          <img
+            src={games[selectedIndex].image}
+            alt={games[selectedIndex].title}
+          />
+        </div>
 
-      {/* 스크롤 가능한 게임 리스트 */}
-      <div className="game-list-wrapper" ref={listRef}>
-        {games.map((game, index) => (
-          <div key={game.id} onClick={() => setSelectedIndex(index)}>
-            <GameCard game={game} selected={index === selectedIndex} />
-          </div>
-        ))}
+        {/* 하단 게임 리스트 */}
+        <div className="game-list-wrapper" ref={listRef}>
+          {games.map((game, index) => (
+            <div key={game.id} onClick={() => setSelectedIndex(index)}>
+              <GameCard game={game} selected={index === selectedIndex} />
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
