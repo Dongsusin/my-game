@@ -1,11 +1,13 @@
 import React, { useState, useEffect, useRef } from "react";
 import { games } from "./components/games";
 import GameCard from "./components/GameCard";
+import Game2048 from "./components/game/2048";
 import "./styles.css";
 
 const App: React.FC = () => {
   const [selectedIndex, setSelectedIndex] = useState(0);
-  const [isLaunching, setIsLaunching] = useState(false);
+  const [showLaunchScreen, setShowLaunchScreen] = useState(false);
+  const [currentGame, setCurrentGame] = useState<string | null>(null);
   const listRef = useRef<HTMLDivElement>(null);
 
   // 방향키 이동 및 Enter 실행
@@ -16,18 +18,25 @@ const App: React.FC = () => {
       } else if (e.key === "ArrowLeft") {
         setSelectedIndex((prev) => (prev - 1 + games.length) % games.length);
       } else if (e.key === "Enter") {
-        if (!isLaunching) {
+        if (!showLaunchScreen && !currentGame) {
           // 실행창 열기
-          setIsLaunching(true);
-        } else {
-          // 실행창 닫기 (실제 게임 시작하는 자리)
-          setIsLaunching(false);
+          setShowLaunchScreen(true);
+        } else if (showLaunchScreen && !currentGame) {
+          // 실행창에서 Enter → 게임 시작
+          const selectedGame = games[selectedIndex].title;
+          if (selectedGame === "2048") {
+            setCurrentGame("2048");
+          }
+          setShowLaunchScreen(false);
+        } else if (currentGame) {
+          // 게임 실행 중에 Enter → 나가기 (종료 기능:임시)
+          setCurrentGame(null);
         }
       }
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [isLaunching]);
+  }, [showLaunchScreen, currentGame, selectedIndex]);
 
   // 선택된 카드 중앙 정렬
   useEffect(() => {
@@ -46,36 +55,45 @@ const App: React.FC = () => {
 
   return (
     <div className="app-container">
-      <div className="game-box">
-        {/* 상단 게임 이미지 */}
-        <div className="game-preview">
-          <img
-            src={games[selectedIndex].image}
-            alt={games[selectedIndex].title}
-          />
+      {/* 게임 실행 중이면 게임만 표시 */}
+      {currentGame ? (
+        <div className="game-container">
+          {currentGame === "2048" && <Game2048 />}
         </div>
-
-        {/* 깜빡이는 안내문구 */}
-        <div className="enter-hint blink">Enter 키로 게임을 실행하세요</div>
-
-        {/* 하단 게임 리스트 */}
-        <div className="game-list-wrapper" ref={listRef}>
-          {games.map((game, index) => (
-            <div key={game.id} onClick={() => setSelectedIndex(index)}>
-              <GameCard game={game} selected={index === selectedIndex} />
+      ) : (
+        <>
+          <div className="game-box">
+            {/* 상단 게임 이미지 */}
+            <div className="game-preview">
+              <img
+                src={games[selectedIndex].image}
+                alt={games[selectedIndex].title}
+              />
             </div>
-          ))}
-        </div>
-      </div>
 
-      {/* 실행창 */}
-      {isLaunching && (
-        <div className="launch-screen">
-          <div className="launch-content">
-            <h1>{games[selectedIndex].title}</h1>
-            <p className="blink">Enter 키로 게임을 실행하세요</p>
+            {/* 깜빡이는 안내문구 */}
+            <div className="enter-hint blink">Enter 키로 게임을 실행하세요</div>
+
+            {/* 하단 게임 리스트 */}
+            <div className="game-list-wrapper" ref={listRef}>
+              {games.map((game, index) => (
+                <div key={game.id} onClick={() => setSelectedIndex(index)}>
+                  <GameCard game={game} selected={index === selectedIndex} />
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
+
+          {/* 실행창 */}
+          {showLaunchScreen && (
+            <div className="launch-screen">
+              <div className="launch-content">
+                <h1>{games[selectedIndex].title}</h1>
+                <p className="blink"> Enter 키를 눌러 시작하세요</p>
+              </div>
+            </div>
+          )}
+        </>
       )}
     </div>
   );
