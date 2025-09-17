@@ -64,6 +64,11 @@ const App: React.FC = () => {
       {/* 게임 실행 중이면 게임만 표시 */}
       {currentGame ? (
         <div className="game-container">
+          {/* 종료 버튼 */}
+          <button className="exit-button" onClick={() => setCurrentGame(null)}>
+            게임 종료 ✖
+          </button>
+
           {currentGame === "2048" && <Game2048 />}
         </div>
       ) : (

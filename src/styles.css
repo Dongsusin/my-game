@@ -169,3 +169,24 @@ html,
     opacity: 0;
   }
 }
+
+/* 게임 종료 버튼 */
+.exit-button {
+  position: absolute;
+  top: 30px;
+  right: 7vw;
+  padding: 8px 14px;
+  font-size: 14px;
+  border: none;
+  border-radius: 8px;
+  background: black;
+  color: #fff;
+  cursor: pointer;
+  z-index: 20;
+  transition: background 0.75s;
+}
+
+.exit-button:hover {
+  background: red;
+  color: #000;
+}
