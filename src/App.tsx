@@ -13,27 +13,33 @@ const App: React.FC = () => {
   // 방향키 이동 및 Enter 실행
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "ArrowRight") {
-        setSelectedIndex((prev) => (prev + 1) % games.length);
-      } else if (e.key === "ArrowLeft") {
-        setSelectedIndex((prev) => (prev - 1 + games.length) % games.length);
-      } else if (e.key === "Enter") {
-        if (!showLaunchScreen && !currentGame) {
-          // 실행창 열기
-          setShowLaunchScreen(true);
-        } else if (showLaunchScreen && !currentGame) {
+      // 게임 실행 중이거나 실행창이 켜져있으면 선택리스트 조작 금지
+      if (currentGame || showLaunchScreen) {
+        if (e.key === "Enter" && currentGame) {
+          // 게임 실행 중에 Enter → 게임 종료
+          setCurrentGame(null);
+        } else if (e.key === "Enter" && showLaunchScreen && !currentGame) {
           // 실행창에서 Enter → 게임 시작
           const selectedGame = games[selectedIndex].title;
           if (selectedGame === "2048") {
             setCurrentGame("2048");
           }
           setShowLaunchScreen(false);
-        } else if (currentGame) {
-          // 게임 실행 중에 Enter → 나가기 (종료 기능:임시)
-          setCurrentGame(null);
         }
+        return; // 방향키는 무시
+      }
+
+      // 선택 리스트 이동 (게임/실행창이 아닐 때만)
+      if (e.key === "ArrowRight") {
+        setSelectedIndex((prev) => (prev + 1) % games.length);
+      } else if (e.key === "ArrowLeft") {
+        setSelectedIndex((prev) => (prev - 1 + games.length) % games.length);
+      } else if (e.key === "Enter") {
+        // 실행창 열기
+        setShowLaunchScreen(true);
       }
     };
+
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [showLaunchScreen, currentGame, selectedIndex]);
