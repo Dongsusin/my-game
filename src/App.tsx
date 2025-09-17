@@ -1,7 +1,9 @@
+// File: src/App.tsx
 import React, { useState, useEffect, useRef } from "react";
 import { games } from "./components/games";
 import GameCard from "./components/GameCard";
 import Game2048 from "./components/game/2048";
+import Tetris from "./components/game/Tetris";
 import "./styles.css";
 
 const App: React.FC = () => {
@@ -23,6 +25,8 @@ const App: React.FC = () => {
           const selectedGame = games[selectedIndex].title;
           if (selectedGame === "2048") {
             setCurrentGame("2048");
+          } else if (selectedGame === "테트리스") {
+            setCurrentGame("Tetris");
           }
           setShowLaunchScreen(false);
         }
@@ -70,6 +74,7 @@ const App: React.FC = () => {
           </button>
 
           {currentGame === "2048" && <Game2048 />}
+          {currentGame === "Tetris" && <Tetris />}
         </div>
       ) : (
         <>

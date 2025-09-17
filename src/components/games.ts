@@ -6,7 +6,7 @@ export interface Game {
 
 export const games: Game[] = [
   { id: 1, title: "2048", image: "/images/2048.png" },
-  { id: 2, title: "테트릭스", image: "/images/tetris.png" },
+  { id: 2, title: "테트리스", image: "/images/tetris.png" },
   { id: 3, title: "얼불춤", image: "/images/icefire.png" },
   { id: 4, title: "무한의계단", image: "/images/infinite_stairs.png" },
   { id: 5, title: "레이디버그", image: "/images/ladybug.png" },
