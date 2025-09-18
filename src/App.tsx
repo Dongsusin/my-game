@@ -4,6 +4,8 @@ import { games } from "./components/games";
 import GameCard from "./components/GameCard";
 import Game2048 from "./components/game/2048";
 import Tetris from "./components/game/Tetris";
+import Sudoku from "./components/game/Sudoku";
+import BulletDodge from "./components/game/BulletDodge";
 import "./styles.css";
 
 const App: React.FC = () => {
@@ -27,6 +29,10 @@ const App: React.FC = () => {
             setCurrentGame("2048");
           } else if (selectedGame === "테트리스") {
             setCurrentGame("Tetris");
+          } else if (selectedGame === "스도쿠") {
+            setCurrentGame("스도쿠");
+          } else if (selectedGame === "총알 피하기") {
+            setCurrentGame("BulletDodge");
           }
           setShowLaunchScreen(false);
         }
@@ -75,6 +81,8 @@ const App: React.FC = () => {
 
           {currentGame === "2048" && <Game2048 />}
           {currentGame === "Tetris" && <Tetris />}
+          {currentGame === "스도쿠" && <Sudoku />}
+          {currentGame === "BulletDodge" && <BulletDodge />}
         </div>
       ) : (
         <>

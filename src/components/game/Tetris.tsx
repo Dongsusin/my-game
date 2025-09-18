@@ -6,7 +6,7 @@ type Cell = number; // 0 empty, >0 color id
 
 const COLS = 10;
 const ROWS = 10;
-const START_SPEED = 1000; // ms per drop
+const START_SPEED = 500;
 
 const SHAPES: { [key: string]: number[][][] } = {
   I: [
